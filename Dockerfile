@@ -14,7 +14,7 @@ RUN node --test test/
 # Stage 2: runtime image with only the files needed to run the app
 FROM node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293 AS runtime
 
-LABEL maintainer="Abhay" \
+LABEL maintainer="Abhay Maurya" \
       description="KubePulse - containerized Node.js app for the Kubernetes assignment" \
       version="1.0"
 

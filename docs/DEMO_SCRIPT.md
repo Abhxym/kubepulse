@@ -3,7 +3,7 @@
 Record with OBS / Xbox Game Bar (`Win + Alt + R`) / Loom. Keep a terminal and the browser side by side.
 
 ## 0. Intro (30 s)
-> "Hi, I'm <name>, PRN <prn>. This is KubePulse - a Node.js dashboard I containerized with Docker and deployed on Kubernetes using minikube. The UI shows which pod served each request, so we can *see* Kubernetes working."
+> "Hi, I am Abhay Maurya, PRN 202301040187. This is KubePulse - a Node.js dashboard I containerized with Docker and deployed on Kubernetes using minikube. The UI shows which pod served each request, so we can *see* Kubernetes working."
 
 Show the repo on GitHub and the folder structure briefly.
 
