@@ -1,0 +1,129 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubepulse
+  namespace: kubepulse
+  labels:
+    app: kubepulse
+    tier: web
+    app.kubernetes.io/name: kubepulse
+    app.kubernetes.io/version: "1.0.0"
+spec:
+  # Three replicas = high availability; the Service load-balances across them.
+  replicas: 3
+  revisionHistoryLimit: 5
+  selector:
+    matchLabels:
+      app: kubepulse
+  # Zero-downtime rolling updates: add one new pod before removing an old one.
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: kubepulse
+        tier: web
+        version: "1.0.0"
+    spec:
+      terminationGracePeriodSeconds: 20
+      # Prefer spreading replicas over different nodes when more than one exists.
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: kubepulse
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: kubepulse
+          image: kubepulse:1.0
+          # Image is loaded into minikube locally, never pulled from a registry.
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+
+          # Non-secret settings come from the ConfigMap...
+          envFrom:
+            - configMapRef:
+                name: kubepulse-config
+          # ...and pod identity comes from the Downward API.
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: CPU_REQUEST
+              valueFrom:
+                resourceFieldRef:
+                  containerName: kubepulse
+                  resource: requests.cpu
+                  divisor: 1m
+            - name: MEM_LIMIT
+              valueFrom:
+                resourceFieldRef:
+                  containerName: kubepulse
+                  resource: limits.memory
+                  divisor: 1Mi
+
+          # Guaranteed minimum (requests) and hard ceiling (limits) per container.
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+            limits:
+              cpu: "250m"
+              memory: "128Mi"
+
+          # Startup probe protects slow starts from being killed by liveness.
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 2
+            failureThreshold: 15
+          # Liveness: restart the container if the process hangs.
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
+          # Readiness: only route Service traffic to warmed-up, non-draining pods.
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: http
+            initialDelaySeconds: 2
+            periodSeconds: 3
+            timeoutSeconds: 2
+            failureThreshold: 2
+
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]

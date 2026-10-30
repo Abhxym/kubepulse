@@ -1,0 +1,11 @@
+PS C:\Users\Admin\Documents\Cloud-MDM\kubepulse> curl.exe -s -o NUL -w "%{http_code}`n" http://127.0.0.1:59578/
+200
+
+PS C:\Users\Admin\Documents\Cloud-MDM\kubepulse> 1..30 | ForEach-Object { (curl.exe -s http://127.0.0.1:59578/api/hit | ConvertFrom-Json).pod } | Group-Object | Select-Object Count, Name
+
+Count Name                      
+----- ----                      
+   13 kubepulse-5495689f49-69fs9
+    9 kubepulse-5495689f49-zrzc7
+    8 kubepulse-5495689f49-472sn
+

@@ -1,0 +1,7 @@
+# Isolates every KubePulse resource in its own namespace.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kubepulse
+  labels:
+    app.kubernetes.io/part-of: kubepulse

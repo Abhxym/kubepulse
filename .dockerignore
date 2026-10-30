@@ -1,0 +1,16 @@
+.git
+.gitignore
+.github
+node_modules
+npm-debug.log
+k8s
+docs
+report
+scripts
+*.md
+*.ps1
+*.sh
+Dockerfile
+.dockerignore
+.vscode
+.idea

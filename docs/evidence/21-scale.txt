@@ -1,0 +1,16 @@
+PS C:\Users\Admin\Documents\Cloud-MDM\kubepulse> kubectl scale deployment/kubepulse --replicas=5 -n kubepulse
+deployment.apps/kubepulse scaled
+
+PS C:\Users\Admin\Documents\Cloud-MDM\kubepulse> kubectl rollout status deployment/kubepulse -n kubepulse
+Waiting for deployment "kubepulse" rollout to finish: 3 of 5 updated replicas are available...
+Waiting for deployment "kubepulse" rollout to finish: 4 of 5 updated replicas are available...
+deployment "kubepulse" successfully rolled out
+
+PS C:\Users\Admin\Documents\Cloud-MDM\kubepulse> kubectl get pods -n kubepulse -o wide
+NAME                         READY   STATUS    RESTARTS   AGE     IP            NODE       NOMINATED NODE   READINESS GATES
+kubepulse-5495689f49-5lhr4   1/1     Running   0          2m23s   10.244.0.44   minikube   <none>           <none>
+kubepulse-5495689f49-fh9p4   1/1     Running   0          2m26s   10.244.0.43   minikube   <none>           <none>
+kubepulse-5495689f49-j57rx   1/1     Running   0          4s      10.244.0.45   minikube   <none>           <none>
+kubepulse-5495689f49-ppg8c   1/1     Running   0          4s      10.244.0.46   minikube   <none>           <none>
+kubepulse-5495689f49-t6p4h   1/1     Running   0          2m29s   10.244.0.42   minikube   <none>           <none>
+

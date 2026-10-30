@@ -1,0 +1,13 @@
+PS C:\Users\Admin\Documents\Cloud-MDM\kubepulse> kubectl apply -f k8s/
+namespace/kubepulse created
+configmap/kubepulse-config created
+deployment.apps/kubepulse created
+service/kubepulse-service created
+horizontalpodautoscaler.autoscaling/kubepulse-hpa created
+
+PS C:\Users\Admin\Documents\Cloud-MDM\kubepulse> kubectl rollout status deployment/kubepulse -n kubepulse
+Waiting for deployment "kubepulse" rollout to finish: 0 of 3 updated replicas are available...
+Waiting for deployment "kubepulse" rollout to finish: 1 of 3 updated replicas are available...
+Waiting for deployment "kubepulse" rollout to finish: 2 of 3 updated replicas are available...
+deployment "kubepulse" successfully rolled out
+

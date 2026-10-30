@@ -1,0 +1,8 @@
+PS C:\Users\Admin\Documents\Cloud-MDM\kubepulse> kubectl logs -l app=kubepulse -n kubepulse --tail=3 --prefix
+[pod/kubepulse-5495689f49-5lhr4/kubepulse] {"ts":"2026-10-30T06:02:35.565Z","level":"info","pod":"kubepulse-5495689f49-5lhr4","msg":"KubePulse v1.0.0 listening","port":8080,"node":"minikube","ip":"10.244.0.44"}
+[pod/kubepulse-5495689f49-5lhr4/kubepulse] {"ts":"2026-10-30T06:02:37.070Z","level":"info","pod":"kubepulse-5495689f49-5lhr4","msg":"pod is ready to receive traffic"}
+[pod/kubepulse-5495689f49-fh9p4/kubepulse] {"ts":"2026-10-30T06:02:32.609Z","level":"info","pod":"kubepulse-5495689f49-fh9p4","msg":"KubePulse v1.0.0 listening","port":8080,"node":"minikube","ip":"10.244.0.43"}
+[pod/kubepulse-5495689f49-fh9p4/kubepulse] {"ts":"2026-10-30T06:02:34.114Z","level":"info","pod":"kubepulse-5495689f49-fh9p4","msg":"pod is ready to receive traffic"}
+[pod/kubepulse-5495689f49-t6p4h/kubepulse] {"ts":"2026-10-30T06:02:29.378Z","level":"info","pod":"kubepulse-5495689f49-t6p4h","msg":"KubePulse v1.0.0 listening","port":8080,"node":"minikube","ip":"10.244.0.42"}
+[pod/kubepulse-5495689f49-t6p4h/kubepulse] {"ts":"2026-10-30T06:02:30.884Z","level":"info","pod":"kubepulse-5495689f49-t6p4h","msg":"pod is ready to receive traffic"}
+

@@ -1,0 +1,58 @@
+PS C:\Users\Admin\Documents\Cloud-MDM\kubepulse> kubectl describe deployment kubepulse -n kubepulse
+Name:                   kubepulse
+Namespace:              kubepulse
+CreationTimestamp:      Fri, 30 Oct 2026 11:28:44 +0530
+Labels:                 app=kubepulse
+                        app.kubernetes.io/name=kubepulse
+                        app.kubernetes.io/version=1.0.0
+                        tier=web
+Annotations:            deployment.kubernetes.io/revision: 1
+Selector:               app=kubepulse
+Replicas:               3 desired | 3 updated | 3 total | 3 available | 0 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  0 max unavailable, 1 max surge
+Pod Template:
+  Labels:  app=kubepulse
+           tier=web
+           version=1.0.0
+  Containers:
+   kubepulse:
+    Image:      kubepulse:1.0
+    Port:       8080/TCP
+    Host Port:  0/TCP
+    Limits:
+      cpu:     250m
+      memory:  128Mi
+    Requests:
+      cpu:      50m
+      memory:   64Mi
+    Liveness:   http-get http://:http/healthz delay=0s timeout=2s period=10s #success=1 #failure=3
+    Readiness:  http-get http://:http/readyz delay=2s timeout=2s period=3s #success=1 #failure=2
+    Startup:    http-get http://:http/healthz delay=0s timeout=1s period=2s #success=1 #failure=15
+    Environment Variables from:
+      kubepulse-config  ConfigMap  Optional: false
+    Environment:
+      POD_NAME:                  (v1:metadata.name)
+      POD_NAMESPACE:             (v1:metadata.namespace)
+      POD_IP:                    (v1:status.podIP)
+      NODE_NAME:                 (v1:spec.nodeName)
+      CPU_REQUEST:              50 (requests.cpu)
+      MEM_LIMIT:                128 (limits.memory)
+    Mounts:                     <none>
+  Volumes:                      <none>
+  Topology Spread Constraints:  kubernetes.io/hostname:ScheduleAnyway when max skew 1 is exceeded for selector app=kubepulse
+  Node-Selectors:               <none>
+  Tolerations:                  <none>
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Available      True    MinimumReplicasAvailable
+  Progressing    True    NewReplicaSetAvailable
+OldReplicaSets:  <none>
+NewReplicaSet:   kubepulse-5495689f49 (3/3 replicas created)
+Events:
+  Type    Reason             Age   From                   Message
+  ----    ------             ----  ----                   -------
+  Normal  ScalingReplicaSet  46s   deployment-controller  Scaled up replica set kubepulse-5495689f49 from 0 to 3
+

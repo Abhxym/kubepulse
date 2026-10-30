@@ -1,0 +1,14 @@
+PS C:\Users\Admin\Documents\Cloud-MDM\kubepulse> kubectl get deployments -n kubepulse
+NAME        READY   UP-TO-DATE   AVAILABLE   AGE
+kubepulse   3/3     3            3           11s
+
+PS C:\Users\Admin\Documents\Cloud-MDM\kubepulse> kubectl get replicaset -n kubepulse
+NAME                   DESIRED   CURRENT   READY   AGE
+kubepulse-5495689f49   3         3         3       12s
+
+PS C:\Users\Admin\Documents\Cloud-MDM\kubepulse> kubectl get pods -n kubepulse -l app=kubepulse -o wide
+NAME                         READY   STATUS    RESTARTS   AGE   IP            NODE       NOMINATED NODE   READINESS GATES
+kubepulse-5495689f49-472sn   1/1     Running   0          13s   10.244.0.36   minikube   <none>           <none>
+kubepulse-5495689f49-69fs9   1/1     Running   0          13s   10.244.0.35   minikube   <none>           <none>
+kubepulse-5495689f49-zrzc7   1/1     Running   0          13s   10.244.0.37   minikube   <none>           <none>
+

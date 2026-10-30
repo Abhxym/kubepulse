@@ -1,0 +1,30 @@
+PS C:\Users\Admin\Documents\Cloud-MDM\kubepulse> kubectl get pods -n kubepulse
+NAME                         READY   STATUS    RESTARTS      AGE
+kubepulse-5495689f49-472sn   1/1     Running   1 (44s ago)   3m6s
+kubepulse-5495689f49-69fs9   1/1     Running   0             3m6s
+kubepulse-5495689f49-zrzc7   1/1     Running   0             3m6s
+
+PS C:\Users\Admin\Documents\Cloud-MDM\kubepulse> curl.exe -s -X POST http://127.0.0.1:59578/api/chaos
+{"pod":"kubepulse-5495689f49-472sn","message":"Pod is crashing; Kubernetes will restart it."}
+
+PS C:\Users\Admin\Documents\Cloud-MDM\kubepulse> kubectl get pods -n kubepulse
+NAME                         READY   STATUS             RESTARTS     AGE
+kubepulse-5495689f49-472sn   0/1     CrashLoopBackOff   1 (9s ago)   3m16s
+kubepulse-5495689f49-69fs9   1/1     Running            0            3m16s
+kubepulse-5495689f49-zrzc7   1/1     Running            0            3m16s
+
+PS C:\Users\Admin\Documents\Cloud-MDM\kubepulse> kubectl delete pod kubepulse-5495689f49-zrzc7 -n kubepulse
+pod "kubepulse-5495689f49-zrzc7" deleted
+
+PS C:\Users\Admin\Documents\Cloud-MDM\kubepulse> kubectl get pods -n kubepulse
+NAME                         READY   STATUS    RESTARTS      AGE
+kubepulse-5495689f49-472sn   0/1     Running   2 (13s ago)   3m20s
+kubepulse-5495689f49-69fs9   1/1     Running   0             3m20s
+kubepulse-5495689f49-qz645   1/1     Running   0             4s
+
+PS C:\Users\Admin\Documents\Cloud-MDM\kubepulse> kubectl get pods -n kubepulse
+NAME                         READY   STATUS    RESTARTS      AGE
+kubepulse-5495689f49-472sn   1/1     Running   2 (22s ago)   3m29s
+kubepulse-5495689f49-69fs9   1/1     Running   0             3m29s
+kubepulse-5495689f49-qz645   1/1     Running   0             13s
+

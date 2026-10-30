@@ -1,0 +1,9 @@
+PS C:\Users\Admin\Documents\Cloud-MDM\kubepulse> curl.exe -s http://localhost:8080/healthz
+{"status":"ok","pod":"241045f10243"}
+
+PS C:\Users\Admin\Documents\Cloud-MDM\kubepulse> curl.exe -s http://localhost:8080/readyz
+{"status":"ready","pod":"241045f10243"}
+
+PS C:\Users\Admin\Documents\Cloud-MDM\kubepulse> curl.exe -s http://localhost:8080/api/info
+{"app":{"appName":"KubePulse","version":"1.0.0","environment":"local","accent":"#7c5cff","chaosEnabled":true},"pod":{"name":"241045f10243","ip":"172.17.0.2","node":"docker-host","namespace":"none","cpuRequest":"n/a","memLimit":"n/a"},"runtime":{"node":"v20.20.2","platform":"linux/x64","pid":1,"uptimeSec":55,"startedAt":"2026-10-30T05:55:05.266Z","rssMB":47.7,"heapUsedMB":4,"loadAvg":[0.1,0.28,0.41]},"stats":{"requests":11,"hits":1},"ready":true}
+

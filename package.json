@@ -1,0 +1,14 @@
+{
+  "name": "kubepulse",
+  "version": "1.0.0",
+  "description": "Cloud-native live dashboard that visualises Kubernetes load balancing, health probes and self-healing.",
+  "main": "app/server.js",
+  "scripts": {
+    "start": "node app/server.js",
+    "test": "node --test test/"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT"
+}

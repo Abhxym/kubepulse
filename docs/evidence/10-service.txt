@@ -1,0 +1,29 @@
+PS C:\Users\Admin\Documents\Cloud-MDM\kubepulse> kubectl get services -n kubepulse
+NAME                TYPE       CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
+kubepulse-service   NodePort   10.99.242.92   <none>        80:30080/TCP   38s
+
+PS C:\Users\Admin\Documents\Cloud-MDM\kubepulse> kubectl describe service kubepulse-service -n kubepulse
+Name:                     kubepulse-service
+Namespace:                kubepulse
+Labels:                   app=kubepulse
+Annotations:              <none>
+Selector:                 app=kubepulse
+Type:                     NodePort
+IP Family Policy:         SingleStack
+IP Families:              IPv4
+IP:                       10.99.242.92
+IPs:                      10.99.242.92
+Port:                     http  80/TCP
+TargetPort:               http/TCP
+NodePort:                 http  30080/TCP
+Endpoints:                10.244.0.37:8080,10.244.0.36:8080,10.244.0.35:8080
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Internal Traffic Policy:  Cluster
+Events:                   <none>
+
+PS C:\Users\Admin\Documents\Cloud-MDM\kubepulse> kubectl get endpoints kubepulse-service -n kubepulse
+Warning: v1 Endpoints is deprecated in v1.33+; use discovery.k8s.io/v1 EndpointSlice
+NAME                ENDPOINTS                                            AGE
+kubepulse-service   10.244.0.35:8080,10.244.0.36:8080,10.244.0.37:8080   40s
+

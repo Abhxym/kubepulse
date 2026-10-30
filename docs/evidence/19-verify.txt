@@ -1,0 +1,29 @@
+PS C:\Users\Admin\Documents\Cloud-MDM\kubepulse> kubectl get all -n kubepulse
+NAME                             READY   STATUS    RESTARTS   AGE
+pod/kubepulse-5495689f49-5lhr4   1/1     Running   0          2m13s
+pod/kubepulse-5495689f49-fh9p4   1/1     Running   0          2m16s
+pod/kubepulse-5495689f49-t6p4h   1/1     Running   0          2m19s
+
+NAME                        TYPE       CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
+service/kubepulse-service   NodePort   10.99.242.92   <none>        80:30080/TCP   6m3s
+
+NAME                        READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/kubepulse   3/3     3            3           6m3s
+
+NAME                                   DESIRED   CURRENT   READY   AGE
+replicaset.apps/kubepulse-5495689f49   3         3         3       6m3s
+replicaset.apps/kubepulse-78d7b68d54   0         0         0       2m29s
+
+NAME                                                REFERENCE              TARGETS       MINPODS   MAXPODS   REPLICAS   AGE
+horizontalpodautoscaler.autoscaling/kubepulse-hpa   Deployment/kubepulse   cpu: 4%/70%   3         6         3          6m3s
+
+PS C:\Users\Admin\Documents\Cloud-MDM\kubepulse> kubectl get hpa -n kubepulse
+NAME            REFERENCE              TARGETS       MINPODS   MAXPODS   REPLICAS   AGE
+kubepulse-hpa   Deployment/kubepulse   cpu: 4%/70%   3         6         3          6m4s
+
+PS C:\Users\Admin\Documents\Cloud-MDM\kubepulse> kubectl top pods -n kubepulse
+NAME                         CPU(cores)   MEMORY(bytes)   
+kubepulse-5495689f49-5lhr4   2m           8Mi             
+kubepulse-5495689f49-fh9p4   2m           8Mi             
+kubepulse-5495689f49-t6p4h   2m           7Mi             
+

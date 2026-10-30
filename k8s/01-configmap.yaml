@@ -1,0 +1,13 @@
+# Externalised configuration: change behaviour without rebuilding the image.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kubepulse-config
+  namespace: kubepulse
+  labels:
+    app: kubepulse
+data:
+  APP_NAME: "KubePulse"
+  APP_VERSION: "1.0.0"
+  APP_ENV: "minikube"
+  ENABLE_CHAOS: "true"

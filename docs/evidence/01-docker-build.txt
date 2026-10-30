@@ -1,0 +1,131 @@
+PS C:\Users\Admin\Documents\Cloud-MDM\kubepulse> docker build --no-cache -t kubepulse:1.0 .
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.16kB 0.0s done
+#1 DONE 0.0s
+
+#2 [auth] library/node:pull token for registry-1.docker.io
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+#3 ...
+
+#4 [auth] library/node:pull token for registry-1.docker.io
+#4 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+#3 DONE 20.4s
+
+#5 [auth] library/node:pull token for registry-1.docker.io
+#5 DONE 0.0s
+
+#6 [internal] load .dockerignore
+#6 transferring context: 172B done
+#6 DONE 0.0s
+
+#7 [internal] load build context
+#7 DONE 0.0s
+
+#8 [test 1/7] FROM docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+#8 resolve docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+#8 ...
+
+#9 [auth] library/node:pull token for registry-1.docker.io
+#9 DONE 0.0s
+
+#8 [test 1/7] FROM docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+#8 resolve docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293 20.2s done
+#8 DONE 20.2s
+
+#10 [test 2/7] WORKDIR /src
+#10 CACHED
+
+#11 [runtime 2/5] WORKDIR /app
+#11 CACHED
+
+#7 [internal] load build context
+#7 transferring context: 323B done
+#7 DONE 0.0s
+
+#12 [test 3/7] COPY package.json ./
+#12 DONE 0.0s
+
+#13 [test 4/7] COPY app ./app
+#13 DONE 0.1s
+
+#14 [test 5/7] COPY public ./public
+#14 DONE 0.1s
+
+#15 [test 6/7] COPY test ./test
+#15 DONE 0.1s
+
+#16 [test 7/7] RUN node --test test/
+#16 0.399 TAP version 13
+#16 0.570 # Subtest: liveness probe returns 200
+#16 0.571 ok 1 - liveness probe returns 200
+#16 0.572   ---
+#16 0.572   duration_ms: 89.05579
+#16 0.572   ...
+#16 0.582 # Subtest: readiness probe is 503 until warm, then 200
+#16 0.582 ok 2 - readiness probe is 503 until warm, then 200
+#16 0.582   ---
+#16 0.582   duration_ms: 12.707769
+#16 0.582   ...
+#16 0.597 # Subtest: /api/info reports pod metadata
+#16 0.598 ok 3 - /api/info reports pod metadata
+#16 0.598   ---
+#16 0.598   duration_ms: 12.937876
+#16 0.598   ...
+#16 0.609 # Subtest: /api/hit identifies the serving pod
+#16 0.609 ok 4 - /api/hit identifies the serving pod
+#16 0.609   ---
+#16 0.609   duration_ms: 14.273
+#16 0.609   ...
+#16 0.618 # Subtest: dashboard is served
+#16 0.618 ok 5 - dashboard is served
+#16 0.618   ---
+#16 0.618   duration_ms: 9.01272
+#16 0.618   ...
+#16 0.625 # Subtest: path traversal is blocked
+#16 0.625 ok 6 - path traversal is blocked
+#16 0.625   ---
+#16 0.625   duration_ms: 6.504775
+#16 0.625   ...
+#16 0.632 # Subtest: metrics are exposed in Prometheus format
+#16 0.632 ok 7 - metrics are exposed in Prometheus format
+#16 0.632   ---
+#16 0.632   duration_ms: 7.690552
+#16 0.632   ...
+#16 0.702 1..7
+#16 0.702 # tests 7
+#16 0.702 # suites 0
+#16 0.702 # pass 7
+#16 0.702 # fail 0
+#16 0.702 # cancelled 0
+#16 0.702 # skipped 0
+#16 0.702 # todo 0
+#16 0.703 # duration_ms 332.234674
+#16 DONE 0.7s
+
+#17 [runtime 3/5] COPY --from=test /src/package.json ./
+#17 DONE 0.1s
+
+#18 [runtime 4/5] COPY --from=test /src/app ./app
+#18 DONE 0.1s
+
+#19 [runtime 5/5] COPY --from=test /src/public ./public
+#19 DONE 0.1s
+
+#20 exporting to image
+#20 exporting layers
+#20 exporting layers 0.2s done
+#20 exporting manifest sha256:bcd0a92bee1bab76a4f7a169baea44461499dc84ebea40c212d55676cdaacd8f 0.0s done
+#20 exporting config sha256:ad40732d2349ed60f5fc11b846997b17664723584d92d2a03567e5175fa9e2f0 0.0s done
+#20 exporting attestation manifest sha256:8cafffb9306174fdd82f0419be437be92f1cfc6a5c52441a58104f347de0239f 0.0s done
+#20 exporting manifest list sha256:1c05b6d612f16beda8d45550ba9d03d7154fc13be94304110cde0d1a3c00542d 0.0s done
+#20 naming to docker.io/library/kubepulse:1.0 done
+#20 unpacking to docker.io/library/kubepulse:1.0
+#20 unpacking to docker.io/library/kubepulse:1.0 0.1s done
+#20 DONE 0.4s
+

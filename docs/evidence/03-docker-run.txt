@@ -1,0 +1,11 @@
+PS C:\Users\Admin\Documents\Cloud-MDM\kubepulse> docker run -d -p 8080:8080 --name kubepulse kubepulse:1.0
+241045f1024366eae5883c8f7820538ed5498454c39f9c7ca8819f3a3de8c096
+
+PS C:\Users\Admin\Documents\Cloud-MDM\kubepulse> docker ps --filter "name=kubepulse"
+CONTAINER ID   IMAGE           COMMAND                  CREATED          STATUS                    PORTS                                         NAMES
+241045f10243   kubepulse:1.0   "docker-entrypoint.s…"   22 seconds ago   Up 21 seconds (healthy)   0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp   kubepulse
+
+PS C:\Users\Admin\Documents\Cloud-MDM\kubepulse> docker logs kubepulse
+{"ts":"2026-10-30T05:55:05.272Z","level":"info","pod":"241045f10243","msg":"KubePulse v1.0.0 listening","port":8080,"node":"docker-host","ip":"172.17.0.2"}
+{"ts":"2026-10-30T05:55:06.780Z","level":"info","pod":"241045f10243","msg":"pod is ready to receive traffic"}
+

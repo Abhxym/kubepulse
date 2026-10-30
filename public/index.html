@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KubePulse - Pod Dashboard</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="nav">
+    <a class="brand" href="#top">
+      <img src="favicon.svg" alt="" width="26" height="26" />
+      <span>KubePulse</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#pod">Pod Info</a>
+      <a href="#balancer">Load Balancing</a>
+      <a href="#healing">Self-Healing</a>
+      <a href="#commands">Commands</a>
+    </nav>
+    <div class="nav-right">
+      <span class="pill" id="envPill">env: -</span>
+      <button class="icon-btn" id="themeBtn" title="Dark mode">Dark</button>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="intro">
+      <h1>KubePulse Dashboard</h1>
+      <p class="muted">
+        A small Node.js app running in Docker / Kubernetes. The details below come from the pod
+        that handled this request, which makes it easy to check replicas, the Service load balancing
+        and pod restarts.
+      </p>
+    </section>
+
+    <section class="row">
+      <div class="card served">
+        <div class="card-head">
+          <h3>Request served by</h3>
+          <span class="badge ok" id="readyBadge">READY</span>
+        </div>
+        <div class="served-pod" id="servedPod">connecting...</div>
+        <table class="kv">
+          <tr><td>Pod IP</td><td id="heroIp">-</td></tr>
+          <tr><td>Node</td><td id="heroNode">-</td></tr>
+          <tr><td>Namespace</td><td id="heroNs">-</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <div class="card-head"><h3>Container stats</h3><span class="muted small">refreshes every 2s</span></div>
+        <div class="kpis">
+          <div class="kpi"><label>Uptime</label><b id="kUptime">-</b></div>
+          <div class="kpi"><label>Requests</label><b id="kReq">-</b></div>
+          <div class="kpi"><label>Memory</label><b id="kMem">-</b></div>
+          <div class="kpi"><label>Version</label><b id="kVer">-</b></div>
+        </div>
+        <svg class="spark" id="spark" viewBox="0 0 300 50" preserveAspectRatio="none"></svg>
+        <div class="spark-label"><span>Response time</span><b id="latency">- ms</b></div>
+      </div>
+    </section>
+
+    <section id="pod" class="section">
+      <h2>Pod Info</h2>
+      <p class="muted">Passed to the container using the Kubernetes Downward API and a ConfigMap.</p>
+      <div class="grid-4" id="identityGrid"></div>
+    </section>
+
+    <section id="balancer" class="section">
+      <h2>Load Balancing Test</h2>
+      <p class="muted">Sends a number of requests to the Service and counts which pod answered each one.</p>
+
+      <div class="card lb">
+        <div class="lb-controls">
+          <label class="inline">Requests:
+            <select id="burstSel">
+              <option value="20">20</option>
+              <option value="60" selected>60</option>
+              <option value="150">150</option>
+            </select>
+          </label>
+          <button class="btn primary" id="fireBtn">Send requests</button>
+          <button class="btn" id="resetBtn">Reset</button>
+          <div class="lb-progress"><div id="lbBar"></div></div>
+          <span class="muted small" id="lbStatus">idle</span>
+        </div>
+
+        <div class="pods" id="podCards">
+          <div class="empty">No data yet. Click "Send requests".</div>
+        </div>
+
+        <div class="lb-foot">
+          <div><label>Pods found</label><b id="distinct">0</b></div>
+          <div><label>Responses</label><b id="total">0</b></div>
+          <div><label>Errors</label><b id="errors">0</b></div>
+          <div><label>Deviation</label><b id="spread">-</b></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="healing" class="section">
+      <h2>Self-Healing Test</h2>
+      <p class="muted">Crashes the pod that receives the request. Kubernetes restarts it while the other replicas keep serving.</p>
+      <div class="heal">
+        <div class="card">
+          <h3>Crash a pod</h3>
+          <p class="small">Watch the pods in a terminal:</p>
+          <pre class="mini"><code>kubectl get pods -n kubepulse -w</code></pre>
+          <button class="btn danger" id="chaosBtn">Crash a pod</button>
+          <p class="muted small" id="chaosNote">Controlled by ENABLE_CHAOS in the ConfigMap.</p>
+        </div>
+        <div class="card">
+          <h3>Availability</h3>
+          <div class="uptime-row" id="uptimeRow"></div>
+          <div class="legend"><span><i class="sq ok"></i>OK</span><span><i class="sq alt"></i>OK (other pod)</span><span><i class="sq bad"></i>failed</span></div>
+          <table class="events">
+            <thead><tr><th>Time</th><th>Event</th><th>Details</th></tr></thead>
+            <tbody id="timeline"><tr class="muted"><td colspan="3">No events yet.</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="commands" class="section">
+      <h2>Useful Commands</h2>
+      <div class="cmds" id="cmds"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>KubePulse v<span id="footVer">1.0.0</span></span>
+    <span class="muted" id="footMeta">-</span>
+  </footer>
+
+  <div class="toast" id="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>

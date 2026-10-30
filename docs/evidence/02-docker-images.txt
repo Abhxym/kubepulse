@@ -1,0 +1,4 @@
+PS C:\Users\Admin\Documents\Cloud-MDM\kubepulse> docker images kubepulse
+REPOSITORY   TAG       IMAGE ID       CREATED              SIZE
+kubepulse    1.0       1c05b6d612f1   About a minute ago   193MB
+

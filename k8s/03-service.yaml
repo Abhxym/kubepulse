@@ -1,0 +1,19 @@
+# Stable network endpoint in front of all ready KubePulse pods.
+apiVersion: v1
+kind: Service
+metadata:
+  name: kubepulse-service
+  namespace: kubepulse
+  labels:
+    app: kubepulse
+spec:
+  type: NodePort
+  # Must match the pod template labels in the Deployment.
+  selector:
+    app: kubepulse
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80          # Service (ClusterIP) port
+      targetPort: http  # named containerPort 8080 on each pod
+      nodePort: 30080   # exposed on every node: <NodeIP>:30080
